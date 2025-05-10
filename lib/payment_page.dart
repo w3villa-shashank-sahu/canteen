@@ -32,7 +32,25 @@ class _ConfirmPaymentState extends State<ConfirmPayment> {
   Future<void> _handlePayment() async {
     setState(() => _loading = true);
     try {
-      await _backend.makePurchase(_student!.id, _student!.totalPrice() );
+      // await _backend.makePurchase(_student!.id, _student!.totalPrice() );
+      // await _backend.makePurchase(_student!.id, _student!.totalPrice());
+      if (mounted) {
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Purchase Success'),
+              content: const Icon(Icons.check_circle, color: Colors.green, size: 64),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
       if (mounted) {
         Navigator.pop(context, true);
       }

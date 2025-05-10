@@ -58,19 +58,20 @@ class MyHomePage extends StatelessWidget {
     try {
       // String res = await FlutterBarcodeScanner.scanBarcode(
       //     "#f44336", "cancelButtonText", true, ScanMode.BARCODE);
-      // var res = await BarcodeScanner.scan();
-      // debugPrint(res.rawContent);
-      // if (!context.mounted) return;
-      // if (res.rawContent == '-1') {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('Cancelled by use')),
-      //   );
-      // }
+      var res = await BarcodeScanner.scan();
+      debugPrint(res.rawContent);
+      if (!context.mounted) return;
+      if (res.rawContent.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Cancelled by use')),
+        );
+        return;
+      }
       Navigator.push(
         context,
         MaterialPageRoute(
-          // builder: (context) => ConfirmPayment(id: res.rawContent),
-          builder: (context) => ConfirmPayment(id: "234932"),
+          builder: (context) => ConfirmPayment(id: res.rawContent),
+          // builder: (context) => ConfirmPayment(id: "234932"),
         ),
       );
     } catch (e) {
